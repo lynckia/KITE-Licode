@@ -18,14 +18,14 @@ class LicodeTest extends KiteBaseTest {
       let openUrlStep = new OpenUrlStep(this);
       await openUrlStep.execute(this);
 
-      let screenshotStep = new ScreenshotStep(this);
-      await screenshotStep.execute(this);
-
       let publishedVideoCheck = new PublishedVideoCheck(this);
       await publishedVideoCheck.execute(this);
 
       let subscribedVideoCheck = new SubscribedVideoCheck(this);
       await subscribedVideoCheck.execute(this);
+      
+      let screenshotStep = new ScreenshotStep(this);
+      await screenshotStep.execute(this);
 
       if (this.getStats) {
         let getStatsStep = new GetStatsStep(this);
