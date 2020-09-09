@@ -86,7 +86,8 @@ class MainPage {
     console.warn(`Testing Audio with ${stepInfo.numberOfParticipant} participants, index`, index);
     await TestUtils.waitForAudios(stepInfo, audios);
 
-    // Waiting for all the videos
+    // Waiting for all the audios
+
 
     return true;
   }
