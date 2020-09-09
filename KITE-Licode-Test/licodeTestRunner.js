@@ -61,11 +61,6 @@ testSinglePCSimulcast.setSimulcast(true);
 testSinglePCSimulcast.setSinglePC(true);
 onlyChromeConfig.addTest(testSinglePCSimulcast);
 
-
 configs.push(firefoxAndChromeConfig);
 configs.push(onlyChromeConfig);
 runAllTests();
-
-
-
-
