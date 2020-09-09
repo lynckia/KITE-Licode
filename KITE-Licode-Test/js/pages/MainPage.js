@@ -1,6 +1,7 @@
 const {By, Key} = require('selenium-webdriver');
 const {TestUtils, KiteTestError, Status} = require('kite-common'); 
 const videos = By.css('video');
+const audios = By.css('audio');
 
 const getPeerConnectionsScript = function() {
   return "window.peers = []; const getPcs = () => { var pc = localStream; window.peers.push(pc.pc.peerConnection); room.remoteStreams.forEach((stream) => {if(stream.pc) {window.peers.push(stream.pc.peerConnection);}});}; getPcs();";
@@ -19,6 +20,21 @@ class MainPage {
     const optionUrl = `${url}${this.option}`
     await TestUtils.open(url);
   }
+  
+  async setBasicExampleOptions(stepInfo) {
+    let setConfig = "";
+    if (stepInfo.options) {
+      Object.entries(stepInfo.options).forEach((entry) => {
+        if (typeof(entry[1]) == 'string') {
+          setConfig += `configFlags.${entry[0]}="${entry[1]}";`
+        } else {
+          setConfig += `configFlags.${entry[0]}=${entry[1]};`
+        }
+      });
+      console.log('Setconfig is ', setConfig);
+      await stepInfo.driver.executeScript(setConfig);
+    }
+  }
 
   async clickStart(url) {
     let startButton = await this.driver.findElement(elements.startButton);
@@ -28,13 +44,17 @@ class MainPage {
   async waitForVideos(stepInfo) {
     await TestUtils.waitForVideos(stepInfo, videos);
   }
+  
+  async waitForAudios(stepInfo) {
+    await TestUtils.waitForVideos(stepInfo, audios);
+  }
 
   async videoCheck(stepInfo, index) {
     let checked; // Result of the verification
     let i; // iteration indicator
     let timeout = stepInfo.timeout;
     stepInfo.numberOfParticipant = parseInt(stepInfo.numberOfParticipant); // To add the first video
-    console.warn(`Testing with ${stepInfo.numberOfParticipant} participants, index`, index);
+    console.warn(`Testing Video with ${stepInfo.numberOfParticipant} participants, index`, index);
     await TestUtils.waitForVideos(stepInfo, videos);
     // Waiting for all the videos
 
@@ -56,6 +76,20 @@ class MainPage {
       await TestUtils.waitAround(3 * 1000); // waiting 3s after each iteration
     }
     return checked.result;
+  }
+
+  async audioCheck(stepInfo, index) {
+    let checked; // Result of the verification
+    let i; // iteration indicator
+    let timeout = stepInfo.timeout;
+    stepInfo.numberOfParticipant = parseInt(stepInfo.numberOfParticipant); // To add the first video
+    console.warn(`Testing Audio with ${stepInfo.numberOfParticipant} participants, index`, index);
+    await TestUtils.waitForAudios(stepInfo, audios);
+
+    // Waiting for all the audios
+
+
+    return true;
   }
 
   async getStats(stepInfo) {

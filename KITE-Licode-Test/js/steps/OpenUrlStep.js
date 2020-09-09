@@ -8,6 +8,8 @@ class OpenUrlStep extends TestStep {
     this.url = kiteBaseTest.url;
     this.uuid = kiteBaseTest.uuid;
     this.page = kiteBaseTest.page;
+    this.reporter = kiteBaseTest.reporter;
+    this.options = kiteBaseTest.licodeOptions;
   }
 
   stepDescription() {
@@ -16,6 +18,10 @@ class OpenUrlStep extends TestStep {
 
   async step() {
     await this.page.open(this);
+    if (this.options) {
+      this.reporter.textAttachment(this.report, "Options set", JSON.stringify(this.options), "plain");
+      await this.page.setBasicExampleOptions(this);
+    }
     await this.page.clickStart(this);
     await this.page.waitForVideos(this);
   }
