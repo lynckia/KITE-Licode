@@ -84,7 +84,8 @@ class MainPage {
     let timeout = stepInfo.timeout;
     stepInfo.numberOfParticipant = parseInt(stepInfo.numberOfParticipant); // To add the first video
     console.warn(`Testing Audio with ${stepInfo.numberOfParticipant} participants, index`, index);
-    await TestUtils.waitForVideos(stepInfo, audios);
+    await TestUtils.waitForAudios(stepInfo, audios);
+
     // Waiting for all the videos
 
     return true;
