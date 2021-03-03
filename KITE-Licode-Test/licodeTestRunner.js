@@ -22,7 +22,7 @@ console.log(`Configuring tests ${testToRun} with gridUrl: ${gridUrl} and licodeU
 
 const runTestConfig = (configFile) => {
   console.log('Will run test', configFile);
-  var script =`kite_r ${configFile}`; 
+  var script =`r ${configFile}`; 
   result = child_process.execSync(script,  {
     maxBuffer: 1000 * 1024,
     shell: '/bin/bash',
