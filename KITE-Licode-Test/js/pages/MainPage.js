@@ -101,6 +101,10 @@ class MainPage {
     }
     return stats;
   }
+
+  async leaveRoom(stepInfo) {
+    await stepInfo.driver.executeScript("room.disconnect();");
+  }
 }
 
 module.exports = MainPage;
