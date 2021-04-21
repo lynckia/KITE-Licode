@@ -1,5 +1,5 @@
 const {TestUtils, WebDriverFactory, KiteBaseTest, ScreenshotStep} = require('./node_modules/kite-common'); 
-const {OpenUrlStep, GetStatsStep} = require('./steps');
+const {OpenUrlStep, GetStatsStep, LeaveRoomStep} = require('./steps');
 const {PublishedVideoCheck, SubscribedVideoCheck, PublishedAudioOnlyCheck, SubscribedAudioOnlyCheck} = require('./checks');
 const {MainPage} = require('./pages');
 
@@ -38,6 +38,8 @@ class LicodeTest extends KiteBaseTest {
         await getStatsStep.execute(this);
       }
 
+      let leaveRoomStep = new LeaveRoomStep(this);
+      await leaveRoomStep.execute(this);
 
       await this.waitAllSteps();
 
